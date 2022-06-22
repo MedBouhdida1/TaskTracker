@@ -1,0 +1,81 @@
+{% extends 'Default.html' %}
+
+<!--  get_flashed_message  -->
+
+{% block title %}
+    Dashboard Admin
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Admin Panel</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('Dashboard_admin')}}">Account request <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('Delete_directeur')}}">Directeurs</a>
+      </li>
+        <div class="d-flex justify-content-end ">
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Welcome, Admin</a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link " href="{{url_for('logout_page')}}">Logout</a>
+            </li>
+        </div>
+
+
+    </ul>
+  </div>
+</nav>
+
+{% if inProgressAccounts %}
+<div class="p-5">
+
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">FirstN</th>
+            <th scope="col">LastN</th>
+            <th scope="col">Email</th>
+            <th scope="col">Department</th>
+            <th scope="col">Job</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Username</th>
+            <th scope="col">ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for account in inProgressAccounts %}
+          <tr>
+            <th>{{account.firstName}}</th>
+            <td>{{account.lastName}}</td>
+            <td>{{account.email_adress}}</td>
+            <td>{{account.departement}}</td>
+            <td>{{account.poste}}</td>
+            <td>{{account.phone}}</td>
+            <td>{{account.username}}</td>
+            <td>
+                <a href="{{url_for('direcMakeDecision',decision = 'accept',idDirecteur = account.id)}}" class="btn btn-success">Accept</a>
+                <a href="{{url_for('direcMakeDecision',decision = 'refuse',idDirecteur = account.id)}}" class="btn btn-danger">refuse</a>
+            </td>
+          </tr>
+          {%endfor%}
+        
+        </tbody>
+      </table>
+{%endif%}
+
+</div>
+
+
+{% endblock %}
+
+
+
+
